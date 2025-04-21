@@ -5,19 +5,239 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--light);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        #form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        #search {
+            padding: 1rem 2rem;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #search:focus {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .weather-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .current-weather {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+            margin: -1rem 0;
+        }
+
+        .temperature {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin: 0.5rem 0;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-transform: capitalize;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .detail-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .forecast {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .forecast-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .forecast-days {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .forecast-day {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .forecast-day h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .forecast-day img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .forecast-temp {
+            display: flex;
+            justify-content: space-around;
+            margin: 0.5rem 0;
+        }
+
+        .day-temp {
+            color: var(--success);
+        }
+
+        .night-temp {
+            color: var(--warning);
+        }
+
+        @media (max-width: 768px) {
+            .temperature {
+                font-size: 2.5rem;
+            }
+            
+            .forecast-day {
+                min-width: 120px;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
 </head>
 
 <body>
-    <form id="form">
-        <input type="text" id="search" placeholder="Search By Loaction" autocomplete="off">
-    </form>
-    <main id="main">
+    <div class="container">
+        <header>
+            <h1>Weather Forecast</h1>
+            <p>Get real-time weather updates for any location</p>
+        </header>
 
-    </main>
+        <form id="form">
+            <input type="text" id="search" placeholder="Search by city name..." autocomplete="off">
+        </form>
+
+        <main id="main">
+            <!-- Current weather will be inserted here -->
+        </main>
+
+        <div id="forecast" class="forecast">
+            <!-- 7-day forecast will be inserted here -->
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
 
 </html>
+
+
