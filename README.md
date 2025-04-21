@@ -4,7 +4,8 @@
 
 A responsive weather application that fetches real-time weather data using the [OpenWeatherMap API](https://openweathermap.org/api) .  
 
-![image](https://github.com/user-attachments/assets/23f9c1d4-d278-44a8-9ba3-c85707a62d57)
+![image](https://github.com/user-attachments/assets/78687e66-b151-4fe4-9f00-b68f7c6a4b2d)
+
 
 
 ## 🔧 Features  
